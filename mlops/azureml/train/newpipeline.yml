@@ -10,8 +10,8 @@ inputs:
     path: azureml:used-cars-data@latest
 
 outputs:
-  train_data:
-  test_data:
+  train_data:uri_file
+  test_data:uri_file 
   model_info_output_path:
 
 settings:
