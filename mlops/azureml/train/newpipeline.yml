@@ -7,7 +7,7 @@ description: Training Pipeline to predict pricing for used cars using Random For
 inputs:
   input:
     type: uri_file
-    path: azureml:used-cars-data@latest
+    path: azureml:used_cars@latest
 
 outputs:
   train_data:
