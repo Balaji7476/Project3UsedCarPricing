@@ -10,6 +10,9 @@ inputs:
   criterion:
     type: string
     default: gini
+  n_estimators:
+    type: integer
+    default: 50
   max_depth:
     type: integer
     default: 5
