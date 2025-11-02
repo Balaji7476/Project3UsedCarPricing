@@ -20,7 +20,6 @@ def parse_args():
     parser = argparse.ArgumentParser("train")
     parser.add_argument("--train_data", type=str, help="Path to train dataset")
     parser.add_argument("--test_data", type=str, help="Path to test dataset")
-    parser.add_argument("--criterion", type=str, default="squared_error", help="Criterion for split quality")
     parser.add_argument('--n_estimators', type=int, default=100,
                         help='The function to measure the quality of a split')
     parser.add_argument('--max_depth', type=int, default=None,
