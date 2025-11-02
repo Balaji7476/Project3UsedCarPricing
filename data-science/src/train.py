@@ -49,7 +49,7 @@ def main(args):
 
 
     # Log model hyperparameters
-    mlflow.log_param("model", "DecisionTreeClassifier")
+    mlflow.log_param("model", "DecisionTreeRegressor")
     mlflow.log_param("criterion", args.criterion)
     mlflow.log_param("max_depth", args.max_depth)
 
