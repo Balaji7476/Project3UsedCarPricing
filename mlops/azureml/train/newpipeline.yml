@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-display_name: usedcar_pricing_training_pipeline
-experiment_name: usedcar_pricing_training_pipeline
+display_name: random_forest_training_pipeline_2
+experiment_name: random_forest_training_2
 description: Training Pipeline to predict pricing for used cars using Random Forest Regressor
 
 inputs:
