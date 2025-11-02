@@ -3,4 +3,4 @@ $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 type: uri_file
 name: used-cars-data
 description: A dataset for predicting machine failures in manufacturing
-path: ../../../data/machine_failure_data.csv
+path: ../../../data/used_cars.csv
