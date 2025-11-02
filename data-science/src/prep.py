@@ -8,8 +8,9 @@ import argparse
 from pathlib import Path
 import os
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import logging
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 import mlflow
 
 def parse_args():
@@ -24,44 +25,42 @@ def parse_args():
 
     return args
 
+def main(args):
+    '''Read, split, and save datasets'''
 
-def main(args):  # Write the function name for the main data preparation logic
-    '''Read, preprocess, split, and save datasets'''
+    # Log arguments
+    logging.info(f"Input data path: {args.raw_data}")
+    logging.info(f"Test-train ratio: {args.test_train_ratio}")
 
     # Reading Data
     df = pd.read_csv(args.raw_data)
-
-    # Encoding the categorical 'Segment' column
+    
+    # Step 1: Perform label encoding to convert categorical features into numerical values for model compatibility.
     label_encoder = LabelEncoder()
     df['Segment'] = label_encoder.fit_transform(df['Segment'])
 
-    # ------- WRITE YOUR CODE HERE -------
+    # Log the first few rows of the dataframe
+    logging.info(f"Transformed Data:\n{df.head()}")
 
-    # Step 1: Perform label encoding to convert categorical features into numerical values for model compatibility.  
-    # Step 2: Split the dataset into training and testing sets using train_test_split with specified test size and random state.  
-    # Step 3: Save the training and testing datasets as CSV files in separate directories for easier access and organization.  
-    # Step 4: Log the number of rows in the training and testing datasets as metrics for tracking and evaluation.  
-
-
-    # Split Data into train and test datasets
+    # Step 2: Split the dataset into training and testing sets using train_test_split with specified test size and random state. 
     train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)
 
-    # Save train and test data
+    # Step 3: Save the training and testing datasets as CSV files in separate directories for easier access and organization.  
     os.makedirs(args.train_data, exist_ok=True)
     os.makedirs(args.test_data, exist_ok=True)
     train_df.to_csv(os.path.join(args.train_data, "train.csv"), index=False)
     test_df.to_csv(os.path.join(args.test_data, "test.csv"), index=False)
 
+    # Step 4: Log the number of rows in the training and testing datasets as metrics for tracking and evaluation.  
     # Log the metrics
     mlflow.log_metric('train size', train_df.shape[0])
     mlflow.log_metric('test size', test_df.shape[0])
-
 
 if __name__ == "__main__":
     mlflow.start_run()
 
     # Parse Arguments
-    args = parse_args()  # Call the function to parse arguments
+    args = parse_args()
 
     lines = [
         f"Raw data path: {args.raw_data}",
@@ -69,10 +68,9 @@ if __name__ == "__main__":
         f"Test dataset path: {args.test_data}",
         f"Test-train ratio: {args.test_train_ratio}",
     ]
-   
+
     for line in lines:
         print(line)
     
     main(args)
-
     mlflow.end_run()

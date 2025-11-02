@@ -20,9 +20,6 @@ def parse_args():
     args, _ = parser.parse_known_args()
     print(f'Arguments: {args}')
 
-
-    print(f'Arguments: {args}')
-
     return args
 
 def main(args):
@@ -30,12 +27,15 @@ def main(args):
 
     print("Registering ", args.model_name)
 
+    # Step 1: Load the model from the specified path using `mlflow.sklearn.load_model` for further processing.  
     # Load model
     model = mlflow.sklearn.load_model(args.model_path)
 
+    # Step 2: Log the loaded model in MLflow with the specified model name for versioning and tracking.
     # Log model using mlflow
     mlflow.sklearn.log_model(model, args.model_name)
 
+    # Step 3: Register the logged model using its URI and model name, and retrieve its registered version.  
     # Register logged model using mlflow
     run_id = mlflow.active_run().info.run_id
     model_uri = f'runs:/{run_id}/{args.model_name}'
@@ -47,12 +47,11 @@ def main(args):
     model_info = {"id": f"{args.model_name}:{model_version}"}
     output_path = os.path.join(args.model_info_output_path, "model_info.json")
     with open(output_path, "w") as of:
-        json.dump(model_info, of) 
-
+        json.dump(model_info, of)
 
 if __name__ == "__main__":
     
-   mlflow.start_run()
+    mlflow.start_run()
     
     # Parse Arguments
     args = parse_args()
