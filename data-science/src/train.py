@@ -86,15 +86,9 @@ def main(args):
     n = len(y_test)
     p = X_test.shape[1]
 
-    if n > p + 1:
-        adj_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
-    else:
-        adj_r2 = float('nan')  # Safeguard against invalid denominator when n <= p + 1
-        print("Warning: Adjusted R² undefined because number of samples ≤ number of predictors + 1.")
-
-    print('Adjusted R-squared (Adjusted R²) of RandomForest Regressor on test set: {:.4f}'.format(adj_r2))
+    print('R2 value: {:.4f}'.format(r2))
     # Logging the Adjusted R² as a metric
-    mlflow.log_metric("Adjusted_R2", float(adj_r2))  # Log the Adjusted R²
+    mlflow.log_metric("Adjusted_R2", float(r2))  # Log the Adjusted R²
 
     # Save the model
     mlflow.sklearn.save_model(sk_model=rforest_model, path=args.model_output)
