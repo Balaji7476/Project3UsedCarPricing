@@ -38,7 +38,7 @@ def main(args):
     # Step 1: Perform label encoding to convert categorical features into numerical values for model compatibility.
     label_encoder = LabelEncoder()
     df['Segment'] = label_encoder.fit_transform(df['Segment'])
-
+    df = df[df['Mileage'] != 0]
     # Log the first few rows of the dataframe
     logging.info(f"Transformed Data:\n{df.head()}")
 
